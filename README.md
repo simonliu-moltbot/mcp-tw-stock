@@ -1,59 +1,52 @@
-# MCP Taiwan Stock Helper (mcp-tw-stock)
+# Taiwan Stock Market (TWSE) MCP Server
 
-A Model Context Protocol (MCP) server that provides real-time stock information from the Taiwan Stock Exchange (TWSE) and Taipei Exchange (TPEx).
+This is a Model Context Protocol (MCP) server that provides real-time stock data from the Taiwan Stock Exchange (TWSE).
 
-## 🇹🇼 Features
-- **Real-time Price**: Get current price, change, and percentage for any TW stock (e.g., TSMC 2330).
-- **Market Index**: Check the TAIEX (Weighted Index) status using `taiex`.
-- **Zero Config**: Uses public APIs (mis.twse.com.tw), no API key required.
+## Features
+- **Real-time Prices**: Fetch current price, bid/ask, and volume for any TSE/OTC stock.
+- **Market Index**: Check the TAIEX (Weighted Index) and OTC Index status.
+- **No API Key Required**: Uses public endpoints from `mis.twse.com.tw`.
 
-## 📦 Installation
+## Setup
 
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/your-username/mcp-tw-stock.git
-   cd mcp-tw-stock
-   ```
+### Prerequisites
+- Python 3.10+
+- `pip`
 
+### Installation
+1. Clone this repository.
 2. Create a virtual environment:
    ```bash
    python3 -m venv .venv
    source .venv/bin/activate
    ```
-
 3. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
-## 🛠 Configuration
+## Configuration
 
 ### Claude Desktop
 Add this to your `claude_desktop_config.json`:
-
 ```json
 {
   "mcpServers": {
     "tw-stock": {
-      "command": "/absolute/path/to/mcp-tw-stock/.venv/bin/python",
+      "command": "/absolute/path/to/project/.venv/bin/python",
       "args": [
-        "/absolute/path/to/mcp-tw-stock/src/server.py"
+        "/absolute/path/to/project/src/server.py"
       ]
     }
   }
 }
 ```
 
-### 🛠 Dive Configuration
+### Dive
 - **Type**: `stdio`
-- **Command**: `/absolute/path/to/mcp-tw-stock/.venv/bin/python`
-- **Args**: `/absolute/path/to/mcp-tw-stock/src/server.py`
+- **Command**: `/absolute/path/to/project/.venv/bin/python`
+- **Args**: `/absolute/path/to/project/src/server.py`
 
-## 🧩 Tools
-
-### `get_stock_price`
-Get stock information.
-- `symbol` (string): The stock code (e.g., "2330", "0050") or "taiex" for the market index.
-
-## License
-MIT
+## Tools
+- `get_stock_price(symbol)`: Get real-time data for a stock (e.g., "2330").
+- `get_market_index()`: Get TAIEX and OTC index status.
