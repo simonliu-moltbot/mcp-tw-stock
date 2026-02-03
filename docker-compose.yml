@@ -1,0 +1,9 @@
+services:
+  mcp-stock:
+    build: .
+    image: mcp-tw-stock
+    ports:
+      - "${PORT:-8000}:8000"
+    env_file:
+      - .env
+    restart: always
