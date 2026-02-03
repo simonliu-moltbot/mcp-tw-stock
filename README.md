@@ -1,52 +1,45 @@
-# Taiwan Stock Market (TWSE) MCP Server
+# 📈 台灣股市助手 (mcp-tw-stock)
 
-This is a Model Context Protocol (MCP) server that provides real-time stock data from the Taiwan Stock Exchange (TWSE).
+這是一個基於 **FastMCP** 框架開發的 Model Context Protocol (MCP) 伺服器，支援查詢台股即時報價與大盤指數。
 
-## Features
-- **Real-time Prices**: Fetch current price, bid/ask, and volume for any TSE/OTC stock.
-- **Market Index**: Check the TAIEX (Weighted Index) and OTC Index status.
-- **No API Key Required**: Uses public endpoints from `mis.twse.com.tw`.
+## ✨ 特點
+- **雙傳輸模式**：同時支援 `stdio` (本機) 與 `streamable-http` (遠端/Docker) 模式。
+- **即時行情**：獲取台股上市/上櫃個股即時價格、漲跌與成交量。
+- **大盤指數**：即時掌握加權指數 (TAIEX) 與櫃買指數現況。
 
-## Setup
+---
 
-### Prerequisites
-- Python 3.10+
-- `pip`
+## 🚀 傳輸模式 (Transport Modes)
 
-### Installation
-1. Clone this repository.
-2. Create a virtual environment:
-   ```bash
-   python3 -m venv .venv
-   source .venv/bin/activate
-   ```
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+### 1. 本機模式 (STDIO) - 預設
+適合與 Claude Desktop 搭配使用。
+```bash
+python src/server.py --mode stdio
+```
 
-## Configuration
+### 2. 遠端模式 (HTTP)
+適合 Docker 部署與遠端存取。
+```bash
+python src/server.py --mode http --port 8000
+```
+- **服務 URL**: `http://localhost:8000/mcp`
 
-### Claude Desktop
-Add this to your `claude_desktop_config.json`:
+---
+
+## 🔌 客戶端配置範例
+
+### Claude Desktop (STDIO)
 ```json
 {
   "mcpServers": {
     "tw-stock": {
-      "command": "/absolute/path/to/project/.venv/bin/python",
-      "args": [
-        "/absolute/path/to/project/src/server.py"
-      ]
+      "command": "python",
+      "args": ["/絕對路徑/src/server.py", "--mode", "stdio"]
     }
   }
 }
 ```
 
-### Dive
-- **Type**: `stdio`
-- **Command**: `/absolute/path/to/project/.venv/bin/python`
-- **Args**: `/absolute/path/to/project/src/server.py`
-
-## Tools
-- `get_stock_price(symbol)`: Get real-time data for a stock (e.g., "2330").
-- `get_market_index()`: Get TAIEX and OTC index status.
+### Dive / HTTP 客戶端
+- **Type**: `streamable`
+- **URL**: `http://localhost:8000/mcp`
